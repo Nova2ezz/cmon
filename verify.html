@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Verification...</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      background: linear-gradient(135deg, #0a0b1a 0%, #3a0f6f 100%);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #bgCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -1;
+      background: transparent;
+    }
+
+    .container {
+      background: transparent;
+      filter: drop-shadow(0 0 12px rgba(155, 92, 255, 0.6));
+      padding: 40px 50px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      user-select: none;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 5px solid rgba(155, 92, 255, 0.3);
+      border-top-color: #ff6fa3;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      user-select: none;
+      margin-bottom: 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    #message {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      min-height: 40px;
+      text-shadow: 0 0 8px rgba(255,111,163,0.7);
+    }
+
+    .error {
+      color: #ff6fa3;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ff6fa3;
+    }
+
+    button {
+      background: linear-gradient(135deg, #9b5cff, #ff6fa3);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      transition: background 0.3s ease, transform 0.25s ease;
+      user-select: none;
+      box-shadow: 0 0 12px rgba(255,111,163,0.7);
+    }
+    button:hover {
+      background: linear-gradient(135deg, #ff6fa3, #9b5cff);
+      transform: scale(1.05);
+      box-shadow: 0 0 18px rgba(155, 92, 255, 0.9);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="container">
+    <div class="spinner" id="spinner"></div>
+    <div id="message">Checking your access, please wait...</div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      const referer = document.referrer || "";
+      const validSources = [
+        'linkvertise.com',
+        'link-target.net',
+        'link-center.net',
+        'lootlabs.gg',
+        'loot-link.com',
+        'loot-links.com'
+      ];
+
+      const isValid = validSources.some(domain => referer.includes(domain));
+      const messageDiv = document.getElementById("message");
+      const spinner = document.getElementById("spinner");
+
+      if (isValid) {
+        messageDiv.textContent = "Access granted! Redirecting...";
+        spinner.style.display = "none";
+        setTimeout(() => {
+          window.location.href = "final.html";
+        }, 1200);
+      } else {
+        spinner.style.display = "none";
+        messageDiv.innerHTML = `<div class="error">Access denied: Don’t try to bypass. If you insist, you will be banned.</div>
+                                <button onclick="window.location.href='home.html'">Back to Home</button>`;
+      }
+    }, 1500);
+  </script>
+
+</body>
+</html>
